@@ -10,7 +10,7 @@ class Multitimeout{
 public:
 	typedef std::chrono::steady_clock::time_point timepoint_t;
 	typedef std::chrono::duration<int, std::milli> ms_t;
-	typedef void (*timeout_handler_func_t)(Multitimeout* Multitimeout, int timer_id); //void func(int timer_id)
+	typedef void (*timeout_handler_func_t)(Multitimeout* Multitimeout, int timer_id); //void func(Multitimeout* this, int timer_id)
 private:
 	//threads
 	std::thread timeout_thread_;
