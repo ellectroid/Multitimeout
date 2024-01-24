@@ -1,7 +1,7 @@
 # Multitimeout
 Single thread multiple timeout handler
 
-C++ Standard: C++20 (uses <semaphore>)
+C++ Standard: C++20 (uses \<semaphore\>)
 
 This mini-library can handle arbitrary number of timeouts (measured in milliseconds) using a single thread, which always sleeps and wakes up only when some timeout expired.
   
