@@ -18,6 +18,7 @@ Multitimeout::Multitimeout() :
 	timeout_expired_counter_ = 0;
 	timeout_event_handler_ = nullptr;
 	timeout_thread_ = std::thread(&Multitimeout::timeout_thread_func, this);
+	timeout_thread_.detach();
 	while (thread_ready_ != true);
 }
 
