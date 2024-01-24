@@ -11,3 +11,5 @@ Useful properties:
 - Has a hardcoded number of timeouts, but it's easily modifyable to support any reasonable quantity
 - Single expiry timeouts or repeating timeouts
 - Single thread handles all timeouts, always sleeps between timeout events
+
+License: Unlicense. Do whatever you want with it.
