@@ -34,7 +34,6 @@ private:
 
 
 private:
-	//void event_handler_thread_func();
 	void timeout_thread_func();
 private:
 	int timeout_update_active_counters();
