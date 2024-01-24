@@ -11,5 +11,6 @@ Useful properties:
 - Has a hardcoded number of timeouts, but it's easily modifyable to support any reasonable quantity
 - Single expiry timeouts or repeating timeouts
 - Single thread handles all timeouts, always sleeps between timeout events
+- Was originally designed to handle all TCP connection timeouts using a single thread
 
 License: Unlicense. Do whatever you want with it.
