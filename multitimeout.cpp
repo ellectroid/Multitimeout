@@ -5,18 +5,23 @@ Multitimeout::Multitimeout() :
 	sleep_time_ = std::chrono::milliseconds(0);
 	reference_timepoint_ = std::chrono::steady_clock::now();
 	timeout_count_ = 16;
-	for (int i = 0; i < timeout_count_; i++) {
-		timeout_[i] = std::chrono::milliseconds(0);
-		timeout_reload_[i] = std::chrono::milliseconds(0);
-		timeout_active_[i] = false;
-		timeout_expired_[i] = false;
-		timeout_update_skip_[i] = false;
+	if ((timeout_ != nullptr) && (timeout_reload_ != nullptr) && (timeout_active_ != nullptr) && (timeout_expired_ != nullptr) && (timeout_repeat_ != nullptr) && (timeout_update_skip_ != nullptr)) {
+		for (int i = 0; i < timeout_count_; i++) {
+			timeout_[i] = std::chrono::milliseconds(0);
+			timeout_reload_[i] = std::chrono::milliseconds(0);
+			timeout_active_[i] = false;
+			timeout_expired_[i] = false;
+			timeout_repeat_[i] = false;
+			timeout_update_skip_[i] = false;
+		}
 	}
 	timeout_active_count_ = 0;
 	thread_ready_ = false;
 	thread_signal_ = 0;
 	timeout_expired_counter_ = 0;
 	timeout_event_handler_ = nullptr;
+	handler_arg_ptr_ = nullptr;
+	handler_arg_int_ = 0;
 	timeout_thread_ = std::thread(&Multitimeout::timeout_thread_func, this);
 	timeout_thread_.detach();
 	while (thread_ready_ != true);
@@ -124,7 +129,7 @@ int Multitimeout::expired_timeout_handler() {
 				timeout_active_count_--;
 			}
 			if (timeout_event_handler_ != nullptr) {
-				timeout_event_handler_(this, i);
+				timeout_event_handler_(this, i, handler_arg_ptr_, handler_arg_int_);
 			}
 			timeout_expired_counter_++;
 
@@ -164,5 +169,27 @@ int Multitimeout::bind_event_handler(timeout_handler_func_t handlerfunc) {
 int Multitimeout::unbind_event_handler() {
 	std::unique_lock<std::mutex> access_lock(object_access_mutex_);
 	timeout_event_handler_ = nullptr;
+	return 0;
+}
+
+int Multitimeout::bind_memory(int timeout_count, ms_t* timeout_mem, ms_t* timeout_reload_mem, bool* timeout_active_mem, bool* timeout_expired_mem, bool* timeout_repeat_mem, bool* timeout_update_skip_mem)
+{
+	if (timeout_count <= 0) return -1;
+	timeout_ = timeout_mem;
+	timeout_reload_ = timeout_reload_mem;
+	timeout_active_ = timeout_active_mem;
+	timeout_expired_ = timeout_expired_mem;
+	timeout_repeat_ = timeout_repeat_mem;
+	timeout_update_skip_ = timeout_update_skip_mem;
+	timeout_count_ = timeout_count;
+	timeout_active_count_ = 0;
+	timeout_expired_counter_ = 0;
+	return 0;
+}
+
+int Multitimeout::bind_handler_arguments(void* arg_ptr, int arg_int)
+{
+	handler_arg_ptr_ = arg_ptr;
+	handler_arg_int_ = arg_int;
 	return 0;
 }
