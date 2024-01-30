@@ -141,6 +141,7 @@ int Multitimeout::add(int timer_id, ms_t timeout, bool repeat) {
 	timeout_reload_[timer_id] = timeout;
 	timeout_repeat_[timer_id] = repeat;
 	timeout_active_[timer_id] = true;
+	timeout_update_skip_[timer_id] = true;
 	timeout_active_count_++;
 	if (timeout_active_count_ == 1) reference_timepoint_ = std::chrono::steady_clock::now();
 	timeout_sem_.release();
