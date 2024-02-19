@@ -2,7 +2,7 @@
 
 #include "multitimeout.h"
 
-void multitimeout_event_handler(Multitimeout* mt, int tmr, void* arg0, int arg1) {
+void multitimeout_event_handler(el_async::Multitimeout* mt, int tmr, void* arg0, int arg1) {
     (void)mt;
     (void)tmr;
     (void)arg0;
@@ -12,10 +12,10 @@ void multitimeout_event_handler(Multitimeout* mt, int tmr, void* arg0, int arg1)
 
 int main()
 {
-    Multitimeout mt;
+    el_async::Multitimeout mt;
     mt.bind_event_handler(multitimeout_event_handler);
-    Multitimeout::ms_t tmr[128];
-    Multitimeout::ms_t tmr_reload[128];
+    el_async::Multitimeout::ms_t tmr[128];
+    el_async::Multitimeout::ms_t tmr_reload[128];
     bool mem0[128];
     bool mem1[128];
     bool mem2[128];
