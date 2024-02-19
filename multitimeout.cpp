@@ -1,5 +1,5 @@
-#include "Multitimeout.h"
-
+#include "multitimeout.h"
+namespace el_async{
 Multitimeout::Multitimeout() :
 	timeout_sem_(0) {
 	sleep_time_ = std::chrono::milliseconds(0);
@@ -192,4 +192,5 @@ int Multitimeout::bind_handler_arguments(void* arg_ptr, int arg_int)
 	handler_arg_ptr_ = arg_ptr;
 	handler_arg_int_ = arg_int;
 	return 0;
+}
 }
