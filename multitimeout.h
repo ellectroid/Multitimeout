@@ -5,7 +5,7 @@
 #include <mutex>
 #include <semaphore>
 #include <chrono>
-
+namespace el_async{
 class Multitimeout{
 public:
 	typedef std::chrono::steady_clock::time_point timepoint_t;
@@ -51,7 +51,7 @@ public:
 	int bind_handler_arguments(void* arg_ptr, int arg_int);
 };
 
-
+}
 
 
 #endif /* Multitimeout_H_ */
